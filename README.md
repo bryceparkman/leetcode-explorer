@@ -1,4 +1,4 @@
-# Weaviate Search and Open AI Leetcode Explorer
+# Leetcode Explorer
 
 LeetCode Explorer uses Weaviate vector search to filter a Leetcode dataset ([link](https://huggingface.co/datasets/greengerong/leetcode)) and display the problem descriptions/solutions. GPT-4 is then used to show a solution in Haskell and a description of that code.
 
