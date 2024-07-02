@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { twilight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faUpRightFromSquare, faAngleLeft, faAngleRight, faMapLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faUpRightFromSquare, faAngleLeft, faAngleDoubleLeft, faAngleRight, faMapLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { CodeSkeleton, DescSkeleton, SolutionSkeleton } from "./skeleton";
 import Markdown from 'react-markdown'
 
@@ -29,6 +29,7 @@ export default function Home() {
   const [offset, setOffset] = useState(0);
   const [isSearchLoading, setSearchLoading] = useState(false);
   const [isCodeLoading, setCodeLoading] = useState(false);
+  const numProblemsDisplayed = 10;
 
   async function getResults() {
     setSearchLoading(true);
@@ -109,7 +110,7 @@ export default function Home() {
           <div className="py-4 text-sm">
             {(searchResponse.length > 0 || isSearchLoading) &&
               <div>
-                {isSearchLoading ? <SolutionSkeleton /> : <div>
+                {isSearchLoading ? <SolutionSkeleton count={numProblemsDisplayed} /> : <div>
                   {searchResponse.map((obj, index) => (
                     <div
                       key={index}
@@ -135,24 +136,28 @@ export default function Home() {
                   ))}
                   <div>
                     <div className="float-left my-1 py-1 ml-1">
-                      Showing {offset + 1} - {offset + 5}
+                      Showing {offset + 1} - {offset + numProblemsDisplayed}
                     </div>
                     <button className="border rounded-lg w-7 my-2 inline-block float-right cursor-pointer hover:bg-gray-600"
                       onClick={() => {
-                        if (offset + 5 <= searchResponse.length) {
-                          setOffset(offset + 5);
-                        }
+                        setOffset(offset + numProblemsDisplayed);
                       }}>
                       <FontAwesomeIcon icon={faAngleRight} className="text-lg py-1" />
                     </button>
                     <button className={`border rounded-lg w-7 my-2 mx-1 inline-block float-right ${offset === 0 ? 'opacity-50' : 'cursor-pointer hover:bg-gray-600'}`}
                       onClick={() => {
-                        setOffset(Math.max(0, offset - 5));
+                        setOffset(Math.max(0, offset - numProblemsDisplayed));
                       }}
                       disabled={offset === 0}>
                       <FontAwesomeIcon icon={faAngleLeft} className="text-lg py-1" />
                     </button>
-
+                    <button className={`border rounded-lg w-7 my-2 inline-block float-right ${offset === 0 ? 'opacity-50' : 'cursor-pointer hover:bg-gray-600'}`}
+                      onClick={() => {
+                        setOffset(0);
+                      }}
+                      disabled={offset === 0}>
+                      <FontAwesomeIcon icon={faAngleDoubleLeft} className="text-lg py-1" />
+                    </button>
                   </div>
                 </div>
                 }
@@ -208,7 +213,7 @@ export default function Home() {
           </>
         : <div className="col-span-8 whitespace-pre-line text-left h-fit bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded p-0.5">
         <span className="flex w-full bg-neutral-950 text-white rounded p-2" style={{ fontFamily: "Consolas" }}>
-          Select a problem on the left and we will use OpenAI to generate a new solution and explantation in Haskell!
+          Select a problem on the left and we will use OpenAI to generate a new solution and explanation in Haskell!
         </span>
       </div>}
       </div>

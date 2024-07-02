@@ -62,7 +62,7 @@ async def filter_solutions(q: str, offset: int):
         target_vector = "question_vector",
         query = q,
         offset = offset,
-        limit = 5,
+        limit = 10,
     )
     if len(response.objects) == 0:
         return JSONResponse(status_code = status.HTTP_404_NOT_FOUND, content = {"message": "No solutions found"})

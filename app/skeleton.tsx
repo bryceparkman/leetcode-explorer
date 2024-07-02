@@ -13,12 +13,12 @@ const Skeleton = ({ className }: SkeletonProps) => (
     </div>
 )
 
-export const SolutionSkeleton = () => (
+export const SolutionSkeleton = ({ count }: { count: number }) => (
     <>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: count }).map((_, index) => (
             <div
                 key={index}
-                className={`text-left px-2 py-5 hover:bg-gray-800 border border-neutral-700 grid grid-cols-5`}
+                className={`text-left px-2 py-3 hover:bg-gray-800 border border-neutral-700 grid grid-cols-5`}
             >
                 <div className="col-span-3 content-center">
                     <Skeleton className="w-[100px] max-w-full" />
