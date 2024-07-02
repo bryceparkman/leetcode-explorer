@@ -1,4 +1,8 @@
 import './globals.css'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import 'react-loading-skeleton/dist/skeleton.css'
+config.autoAddCss = false
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
